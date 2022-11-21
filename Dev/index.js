@@ -1,55 +1,93 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const { generateHTML } = require(".Lib/generateHTML");
+const Engineer = require("./lib/Engineer");
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+const { generateHTML } = require("./lib/generateHTML");
 
-const promptUser = [
-  {
-    type: "input",
-    name: "name",
-    message: "What is the name of the employee?",
-  },
-  {
-    type: "input",
-    name: "id",
-    message: "What is the employees id?",
-  },
-  {
-    type: "input",
-    name: "role",
-    message: "What is the employees role?",
-  },
-  {
-    type: "input",
-    name: "email",
-    message: "What is the employees email?",
-  },
-  {
-    type: "input",
-    name: "github",
-    message: "What is the employees github?",
-  },
+function init(){
+ addEmployee();
+ generateHTML();
+};
 
-  {
-    type: "input",
-    name: "school",
-    message: "What is the employees school?",
-  },
-  {
-    type: "list",
-    name: "employeeMenu",
-    message: "Would you like to add another employee to your team?",
-    choices: ["yes", "no"],
-  },
-];
-function init() {
-  inquirer.prompt(promptUser).then((answers) => {
-    console.log(answers);
-    const html = generateHTML(answers);
-    fs.writeFile("index.html", html, (err) =>
-      err ? console.error(err) : console.log("html generated")
-    );
+const employees = [];
+
+function addEmployee() {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is the name of the employee?",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "What is the employees id?",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is the employees email?",
+      },
+      {
+        type: "list",
+        name: "role",
+        message: "What is the employees role?",
+        choices: ["Manager", "Engineer", "Intern"],
+      },
+    ])
+    .then(({ name, id, email, role }) => {
+      let roleSpecificInfo = "";
+      if (role === "Engineer") {
+        roleSpecificInfo = "github";
+      } else if (role === "Intern") {
+        roleSpecificInfo = "school";
+      } else {
+        roleSpecificInfo = "office";
+      }
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            name: "roleSpecificInfo",
+            message: `Enter employee's ${roleSpecificInfo} `,
+          },
+          {
+            type: "list",
+            name: "moreEmployees",
+            message: "Would you like to add another employee to your team?",
+            choices: ["yes", "no"],
+          },
+        ])
+        .then(({ roleSpecificInfo, moreEmployees }) => {
+          let newEmployee;
+          if (role === "Manager") {
+            newEmployee = new Manager(name, id, email, roleSpecificInfo);
+          } else if (role === "Engineer") {
+            newEmployee = new Engineer(name, id, email, roleSpecificInfo);
+          } else {
+            newEmployee = new Intern(name, id, email, roleSpecificInfo);
+          }
+          employees.push(newEmployee);
+          generateHTML(newEmployee).then(function () {
+            if (moreEmployees === "yes") {
+              addEmployee();
+            } else {
+              console.log("No more employees");
+            }
+          });
+        });
+        fs.writeFile("./dist/index.html", html, (err) =>
+    err ? console.error(err) : console.log("html generated")
+  );
   });
-}
+    
+};
+//addEmployee();
 
-// Function call to initialize app
+
+ 
+
+// // Function call to initialize app
 init();
