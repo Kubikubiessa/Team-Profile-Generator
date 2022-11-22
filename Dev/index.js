@@ -7,7 +7,7 @@ const { generateHTML } = require("./lib/generateHTML");
 
 function init(){
  addEmployee();
- generateHTML();
+
 };
 
 const employees = [];
@@ -70,17 +70,18 @@ function addEmployee() {
             newEmployee = new Intern(name, id, email, roleSpecificInfo);
           }
           employees.push(newEmployee);
-          generateHTML(newEmployee).then(function () {
+          
             if (moreEmployees === "yes") {
               addEmployee();
             } else {
               console.log("No more employees");
+              console.log(employees);
             }
-          });
+           
         });
-        fs.writeFile("./dist/index.html", html, (err) =>
-    err ? console.error(err) : console.log("html generated")
-  );
+  //       fs.writeFile("./dist/index.html", employees, (err) =>
+  //   err ? console.error(err) : console.log("html generated")
+  // );
   });
     
 };
@@ -90,4 +91,4 @@ function addEmployee() {
  
 
 // // Function call to initialize app
-init();
+init(); 
