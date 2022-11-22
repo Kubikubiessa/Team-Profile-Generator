@@ -1,11 +1,9 @@
- 
-function generateHTML(newEmployee) {
-     
-    const name = newEmployee.getName();
-    const id = newEmployee.getId();
-    const email = newEmployee.getEmail();
-  
-    const html = `<!DOCTYPE html>
+const generateHTML = (employees) => {
+  // const name = newEmployee.getName();
+  // const id = newEmployee.getId();
+  // const email = newEmployee.getEmail();
+
+  const html = `<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -20,59 +18,62 @@ function generateHTML(newEmployee) {
         </nav>
         <div class="container">
             <div class="row">`;
-    if (role === "Manager") {
+  for (let i = 0; i < employees.length; i++) {
+    const employee = employees[i];
+    if (employee.getRole() === 'Manager') {
       const office = getOffice();
       html += `
-              <div class="col-md-6">
-                <h2 class="text-center">Manager</h2>
-                <div class="row">
-                <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                  ${name}
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">${id}</li>
-                  <li class="list-group-item">${email}</li>
-                  <li class="list-group-item">${office}</li>
-                </ul>
-              </div>
-                `;
-    } else if (role === "Engineer") {
-      const github = getGithub;
+                    <div class="col-md-6">
+                      <h2 class="text-center">Manager</h2>
+                      <div class="row">
+                      <div class="card" style="width: 18rem;">
+                      <div class="card-header">
+                        ${employee.name}
+                      </div>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item">${employee.id}</li>
+                        <li class="list-group-item">${employee.email}</li>
+                        <li class="list-group-item">${employee.office}</li>
+                      </ul>
+                    </div>
+                      `;
+    } else if (employee.getRole === "Engineer") {
+      const github = getGithub();
       html += `<div class="col-md-6">
-              <h2 class="text-center">Engineer</h2>
-              <div class="row">
-              <div class="card" style="width: 18rem;">
-              <div class="card-header">
-                ${name}
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">${id}</li>
-                <li class="list-group-item">${email}</li>
-                <li class="list-group-item">${github}</li>
-              </ul>
-            </div>
-               `;
+                    <h2 class="text-center">Engineer</h2>
+                    <div class="row">
+                    <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                      ${employee.name}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">${employee.id}</li>
+                      <li class="list-group-item">${employee.email}</li>
+                      <li class="list-group-item">${employee.github}</li>
+                    </ul>
+                  </div>
+                     `;
     } else {
+        
       const school = getSchool();
       html += `
-            <div class="col-md-6">
-            <h2 class="text-center">Intern</h2>
-            <div class="row">
-            <div class="card" style="width: 18rem;">
-            <div class="card-header">
-              ${name} 
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">${id}</li>
-              <li class="list-group-item">${email}</li>
-              <li class="list-group-item">${school}</li>
-            </ul>
-          </div>
-          </ div>
-          </div>`;
-  
+                  <div class="col-md-6">
+                  <h2 class="text-center">Intern</h2>
+                  <div class="row">
+                  <div class="card" style="width: 18rem;">
+                  <div class="card-header">
+                    ${employee.name} 
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">${employee.id}</li>
+                    <li class="list-group-item">${employee.email}</li>
+                    <li class="list-group-item">${employee.school}</li>
+                  </ul>
+                </div>
+                </ div>
+                </div>`;
     }
   }
-  
-module.exports = { generateHTML };
+};
+
+module.exports = generateHTML;

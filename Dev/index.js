@@ -3,10 +3,12 @@ const fs = require("fs");
 const Engineer = require("./lib/Engineer");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
-const { generateHTML } = require("./lib/generateHTML");
+const generateHTML = require("./lib/generateHTML");
+ 
 
 function init(){
  addEmployee();
+ //generatePage()
 
 };
 
@@ -63,11 +65,11 @@ function addEmployee() {
         .then(({ roleSpecificInfo, moreEmployees }) => {
           let newEmployee;
           if (role === "Manager") {
-            newEmployee = new Manager(name, id, email, roleSpecificInfo);
+            newEmployee = new Manager(name, id, email, role, roleSpecificInfo);
           } else if (role === "Engineer") {
-            newEmployee = new Engineer(name, id, email, roleSpecificInfo);
+            newEmployee = new Engineer(name, id, email, role, roleSpecificInfo);
           } else {
-            newEmployee = new Intern(name, id, email, roleSpecificInfo);
+            newEmployee = new Intern(name, id, email, role, roleSpecificInfo);
           }
           employees.push(newEmployee);
           
@@ -76,6 +78,7 @@ function addEmployee() {
             } else {
               console.log("No more employees");
               console.log(employees);
+              generatePage()
             }
            
         });
@@ -83,12 +86,17 @@ function addEmployee() {
   //   err ? console.error(err) : console.log("html generated")
   // );
   });
-    
+  
 };
-//addEmployee();
+function generatePage() {
+  fs.writeFileSync('./dist/index.html', generateHTML(employees));
+  if (err) {
+    console.log(err);
+  } else {
+  console.log('Page generated!')
+};
+}
 
-
- 
-
-// // Function call to initialize app
+// // Function call to initialize app and to generate html
 init(); 
+generatePage();

@@ -4,7 +4,7 @@ describe("Intern", () => {
     // Test for all use cases when initializing a new Employee object
     describe("Initialization", () => {
       it("should create an object with a role of Intern and a school if provided valid arguments", () => {
-        const intern = new Intern("Tom" , 5 , "tom@gmail.com", "University of Utah");
+        const intern = new Intern("Tom",  5 , "tom@gmail.com", "Intern", "University of Utah");
         const role = "Intern";
         const name = "Tom"
         const school = "University of Utah";
