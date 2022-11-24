@@ -1,19 +1,18 @@
+//requiring all files needed for the app.
 const inquirer = require("inquirer");
 const fs = require("fs");
 const Engineer = require("./lib/Engineer");
 const Manager = require("./lib/Manager");
 const Intern = require("./lib/Intern");
-const generateHTML = require("./lib/generateHTML");
+const generateHTML = require("./src/generateHTML");
  
-
+//calling function to run the app.
 function init(){
  addEmployee();
- //generatePage()
-
 };
-
+// empty employee array that will contain the answers of all prompts sorted into roles. 
 const employees = [];
-
+// Inquirer prompts for all role cases when initializing a new employee array that will later be send to the html generator
 function addEmployee() {
   return inquirer
     .prompt([
@@ -39,6 +38,7 @@ function addEmployee() {
         choices: ["Manager", "Engineer", "Intern"],
       },
     ])
+    //once the basic information is collected, the following if-statement will add role-specific information based on the entered roles.
     .then(({ name, id, email, role }) => {
       let roleSpecificInfo = "";
       if (role === "Engineer") {
@@ -62,6 +62,7 @@ function addEmployee() {
             choices: ["yes", "no"],
           },
         ])
+        //if statement to sort employee roles based on prompt input and subclass and to push them into the employee array.
         .then(({ roleSpecificInfo, moreEmployees }) => {
           let newEmployee;
           if (role === "Manager") {
@@ -72,7 +73,7 @@ function addEmployee() {
             newEmployee = new Intern(name, id, email, role, roleSpecificInfo);
           }
           employees.push(newEmployee);
-          
+        // if-statement for re-running addEmployee() to add another employee if desired otherwise end prompts and generate html.   
             if (moreEmployees === "yes") {
               addEmployee();
             } else {
@@ -82,21 +83,19 @@ function addEmployee() {
             }
            
         });
-  //       fs.writeFile("./dist/index.html", employees, (err) =>
-  //   err ? console.error(err) : console.log("html generated")
-  // );
+  
   });
   
 };
+// function to write html via fs. 
 function generatePage() {
   fs.writeFileSync('./dist/index.html', generateHTML(employees));
-  if (err) {
-    console.log(err);
-  } else {
+  
   console.log('Page generated!')
 };
-}
+
+
 
 // // Function call to initialize app and to generate html
 init(); 
-generatePage();
+

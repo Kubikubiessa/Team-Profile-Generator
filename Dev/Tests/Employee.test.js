@@ -7,7 +7,7 @@ describe("Employee", () => {
         const employee = new Employee("Sarah",  3 , "sarah@gmail.com", "Manager");
 
   
-        // Verify that the new object has the correct properties\
+        // Verify that the new object has the correct data type and properties
         expect(employee.name).toEqual(expect.any(String));
         expect(employee.role).toEqual(expect.any(String));
         expect(employee.id).toEqual(expect.any(Number));
@@ -19,6 +19,7 @@ describe("Employee", () => {
         expect(employee.email).toEqual("sarah@gmail.com");
 
       })
+      //verify that the employee getName(),getId(), getRole, getEmail functions return correct values.
       it("should return Sarah when running getName()", () => {
         const employee = new Employee("Sarah", 3 , "sarah@gmail.com", "Manager")
         expect(employee.getName()).toEqual(expect.any(String));

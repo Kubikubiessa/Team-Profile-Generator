@@ -9,7 +9,7 @@ describe("Intern", () => {
         const name = "Tom"
         const school = "University of Utah";
   
-        // Verify that the new object has the correct properties\
+        // Verify that the new object has the correct properties and that the functions return correct values.
         expect(intern.getRole()).toBe(role);
         expect(intern.getName()).toBe(name);
 

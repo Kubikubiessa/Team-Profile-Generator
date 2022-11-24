@@ -1,3 +1,4 @@
+// Intern sub-class with constructor function determining the intern role attributes. 
 const Employee = require('./Employee');
 class Intern extends Employee {
     constructor(name, id, email, role, school) {

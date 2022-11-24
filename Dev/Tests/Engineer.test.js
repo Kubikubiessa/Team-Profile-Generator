@@ -9,7 +9,7 @@ describe("Engineer", () => {
         const name = "Sarah"
         const github = "sarahsGithub";
   
-        // Verify that the new object has the correct properties\
+        // Verify that the new object has the correct properties and that the functions return correct values.
         expect(engineer.getRole()).toBe(role);
         expect(engineer.getName()).toBe(name);
         
@@ -22,28 +22,4 @@ describe("Engineer", () => {
       })
     });
 });
-    // Test for all use cases when initializing a new Employee object
-
-      
-      
-      
-
-    //   // Act
-    //   engineer.getGithub(github);
-    //   engineer.getRole(role);
      
-
-    //   // Assert
-    //   expect( instanceof ).toEqual(true);
-      
-      
-    //   it("should return Sarah when running getName()", () => {
-    //     const employee = new Employee("Sarah", "Manager", 3 , "sarah@gmail.com")
-    //     employee.getName()
-    //     expect(employee.name).toEqual("Sarah");
-
-    //   })
-    // }
-    //   )
-    // })
-  

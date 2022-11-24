@@ -1,3 +1,5 @@
+
+// Employee class with constructor function determining the main role attributes. 
 class Employee {
     constructor(name, id, email, role){
         this.name = name;
@@ -24,14 +26,3 @@ getRole(){
 };
 
 module.exports = Employee;
-
-/*const init = () => {
-    promptUser()
-      // Use writeFile method imported from fs.promises to use promises instead of
-      // a callback function
-      .then((answers) => writeFile('index.html', generateHTML(answers)))
-      .then(() => console.log('Successfully wrote to index.html'))
-      .catch((err) => console.error(err));
-  };
-  
-  init();*/
